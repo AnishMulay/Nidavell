@@ -1,0 +1,49 @@
+# OS - macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# OS - Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Editors / IDEs
+.vscode/
+.idea/
+.fleet/
+.vs/
+*.iml
+.history
+*.swp
+*.swo
+*~
+
+# Rust / Cargo
+**/target/
+**/*.rs.bk
+
+# Environment files
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Logs
+*.log
+
+# Non-Cargo build artifacts / binaries
+*.o
+*.a
+*.so
+*.dylib
+*.dll
+*.exe
+*.out
+
+# Stray local binaries (e.g. built via rustc)
+Rust/cmd-key-value-store/main
+
