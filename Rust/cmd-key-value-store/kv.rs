@@ -22,12 +22,20 @@ impl KVStore {
                 let Some(valString) = words.get(2).copied() else {todo!()};
                 self.add(String::from(keyString), String::from(valString));
             },
-            Some("get") => operation = "get",
-            Some("delete") => operation = "delete",
-            _ => operation = "invalid"
+            Some("get") => {
+                let Some(keyString) = words.get(1).copied() else {todo!()};
+                self.get(String::from(keyString));
+            }
+            Some("delete") => {
+                let Some(keyString) = words.get(1).copied() else {todo!()};
+                self.delete(String::from(keyString));
+            },
+            _ => {
+                println!("Invalid operation")
+            }
         }
 
-        println!("operation {} was called", operation);
+        println!()
     }
 
     pub fn add(&mut self, key: String, val: String) {
@@ -35,12 +43,17 @@ impl KVStore {
         self.mp.insert(key, val);
     }
 
-    pub fn get(&self, key: String) -> Option<&String> {
-        self.mp.get(&key)
+    pub fn get(&self, key: String) {
+        if let Some(val) = self.mp.get(&key) {
+            println!("{}: {}", key, val);   
+        }
+        else {
+            println!("key {} not found", key);
+        }
     }
 
-    pub fn remove(&mut self, key: String) {
+    pub fn delete(&mut self, key: String) {
         self.mp.remove(&key);
-        println!("key {} removed", key)
+        println!("key {} deleted", key)
     }
 }
