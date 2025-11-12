@@ -1,7 +1,6 @@
 use std::collections::HashMap;
-use std::fs::File;
-use std::fs::OpenOptions;
-use std::io::Write;
+use std::fs::{File, OpenOptions};
+use std::io::{Write, BufRead, BufReader};
 
 pub struct KVStore {
     mp: HashMap<String, String>,
@@ -16,6 +15,17 @@ impl KVStore {
             mp: HashMap::new(),
             log_file: lf,
         }
+    }
+
+    pub fn recover_using_log_file(&mut self) {
+        let Ok(mut log_file) = OpenOptions::new().read(true).open("./kvstore/log") else {return; };
+        let reader = BufReader::new(log_file);
+        for line in reader.lines() {
+            let line = match line {Ok(s) => s, Err(_) => continue};
+            let command = String::from(line.trim());
+            self.run_command(&command);
+        }
+        println!("Recovered state using log");
     }
 
     pub fn run_command(&mut self, command: &String) {
@@ -46,7 +56,7 @@ impl KVStore {
 
     pub fn add(&mut self, key: String, val: String) {
         println!("key {} added", key);
-        writeln!(self.log_file, "add {} {}", key, val);
+        writeln!(self.log_file, "set {} {}", key, val);
         self.mp.insert(key, val);
     }
 

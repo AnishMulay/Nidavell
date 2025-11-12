@@ -1,3 +1,6 @@
-add name anish
-add surname mulay
+set name anish
+delete name
 delete surname
+set surname mulay
+set city raleigh
+delete city

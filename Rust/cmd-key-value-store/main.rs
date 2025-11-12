@@ -4,6 +4,7 @@ use std::io;
 
 fn main () {
     let mut store: KVStore = KVStore::new();
+    store.recover_using_log_file();
 
     let mut command: String = String::new();
     loop {
